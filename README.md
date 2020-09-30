@@ -9,7 +9,7 @@ JEA je trenutno gostovan na strežnikih JitPack. *Za uporabo prosim preberite na
 
 **MAVEN**
 1. Dodajte repozitorij v pom.xml datoteko
-```maven
+```xml
 <repositories>
   <repository>
     <id>jitpack.io</id>
@@ -19,7 +19,7 @@ JEA je trenutno gostovan na strežnikih JitPack. *Za uporabo prosim preberite na
 ```
 
 2. Dodajte knjižnjico
-```maven
+```xml
 <dependency>
   <groupId>com.github.JurijTSL</groupId>
   <artifactId>JEA</artifactId>
