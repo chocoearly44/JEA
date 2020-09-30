@@ -4,7 +4,7 @@
 
 JEA omogoča dostop do podatkov za vaš eAsistent račun.
 
-##Setup
+## Nastavitev
 JEA je trenutno gostovan na strežnikih JitPack. *Za uporabo prosim preberite naslednja navodila:*
 
 **MAVEN**
