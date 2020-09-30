@@ -1,8 +1,10 @@
 [![](https://jitpack.io/v/JurijTSL/JEA.svg)](https://jitpack.io/#JurijTSL/JEA)
 
 # JEA (Java eAsistent API)
-
 JEA omogoča dostop do podatkov za vaš eAsistent račun.
+
+## Dokumentacija
+Vse metode so dokumentirane in opisane v odseku [Wiki](https://github.com/JurijTSL/JEA/wiki).
 
 ## Nastavitev
 JEA je trenutno gostovan na strežnikih JitPack. *Za uporabo prosim preberite naslednja navodila:*
