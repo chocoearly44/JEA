@@ -30,7 +30,7 @@ JEA je trenutno gostovan na strežnikih JitPack. *Za uporabo prosim preberite na
 ```
 
 **GRADLE**
-1. Dodajte repozitorij v pom.xml datoteko
+1. Dodajte repozitorij v gradle datoteko
 ```gradle
 allprojects {
   repositories {
