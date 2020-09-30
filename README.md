@@ -41,6 +41,6 @@ allprojects {
 2. Dodajte knjižnjico
 ```gradle
 dependencies {
-  implementation 'com.github.JurijTSL:JEA:Tag'
+  implementation 'com.github.JurijTSL:JEA:TAG'
 }
 ```
