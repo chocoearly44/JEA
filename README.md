@@ -1,2 +1,1 @@
-# JEA (Java eAsistent API)
-Java wrapper za eAsistent API
+[![](https://jitpack.io/v/JurijTSL/JEA.svg)](https://jitpack.io/#JurijTSL/JEA)
