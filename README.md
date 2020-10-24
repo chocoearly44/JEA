@@ -6,7 +6,7 @@ JEA omogoča dostop do podatkov za vaš eAsistent račun.
 ## Dokumentacija
 Vse metode so dokumentirane in opisane v odseku [Wiki](https://github.com/JurijTSL/JEA/wiki).
 
-## Nastavitev
+## Namestitev
 JEA je trenutno gostovan na strežnikih JitPack. *Za uporabo prosim preberite naslednja navodila:*
 
 **MAVEN**
