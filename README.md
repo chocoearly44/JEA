@@ -46,3 +46,6 @@ dependencies {
   implementation 'com.github.JurijTSL:JEA:TAG'
 }
 ```
+
+## Zahvale
+Knjižnjica bazira na raziskavi [@LevecGG](https://github.com/LevecGG), ki je naredil [eAsistent wrapper za Python](https://github.com/LevecGG/eAsistentAPI).
