@@ -51,6 +51,6 @@ dependencies {
 Knjižnjica bazira na raziskavi [@LevecGG](https://github.com/LevecGG), ki je naredil [eAsistent wrapper za Python](https://github.com/LevecGG/eAsistentAPI).
 
 ## Podpora
-The Unofficial Discord API server is a common hangout for library and bot developers alike. It's a great starting point for those looking to dive in and learn bot-creation with the Discord API.
+Pošljite vprašanja ideje ali napake v uradnem Discord Serverju.
 
-[![Widget for the TSL Support guild](https://discord.com/api/guilds/807666401300316160/widget.png?style=banner1)](https://discord.gg/discord-api)
+[![Widget for the TSL Support guild](https://discord.com/api/guilds/807666401300316160/widget.png?style=banner1)](https://discord.gg/Wa24skGscR)
