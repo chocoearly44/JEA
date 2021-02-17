@@ -51,6 +51,6 @@ dependencies {
 Knjižnjica bazira na raziskavi [@LevecGG](https://github.com/LevecGG), ki je naredil [eAsistent wrapper za Python](https://github.com/LevecGG/eAsistentAPI).
 
 ## Podpora
-Pošljite vprašanja ideje ali napake v uradnem Discord Serverju.
+Pošljite vprašanja, ideje ali napake v uradnem Discord Serverju.
 
 [![Widget for the TSL Support guild](https://discord.com/api/guilds/807666401300316160/widget.png?style=banner1)](https://discord.gg/Wa24skGscR)
