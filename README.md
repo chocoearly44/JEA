@@ -48,7 +48,7 @@ dependencies {
 ```
 
 ## Zahvale
-Knjižnjica bazira na raziskavi [@LevecGG](https://github.com/LevecGG), ki je naredil [eAsistent wrapper za Python](https://github.com/LevecGG/eAsistentAPI).
+Knjižnjica bazira na projektu eAsistent wrapper za Python, ki ga je naredil [@LevecGG](https://github.com/LevecGG).
 
 ## Podpora
 Pošljite vprašanja, ideje ali napake v uradnem Discord Serverju.
