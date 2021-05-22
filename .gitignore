@@ -1,2 +1,5 @@
-/target/
-/.idea/
+/.idea
+/target
+
+/src/META-INF/
+/out/
