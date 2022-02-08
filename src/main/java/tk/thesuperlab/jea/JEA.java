@@ -19,6 +19,9 @@ import java.util.List;
 
 /**
  * Glavni razred za klicanje eAsistent API-ja
+ *
+ * @author chocoearly44
+ * @since 2.0
  */
 public class JEA {
 	private String uporabniskoIme;
@@ -38,6 +41,8 @@ public class JEA {
 	 * @param uporabniskoIme Vaše uporabniško ime za prijavo v eAsistent
 	 * @param geslo          Vaše geslo za prijavo v eAsistent.
 	 * @throws IncorrectCredentialsException
+	 * @author chocoearly44
+	 * @since 2.0
 	 */
 	public JEA(String uporabniskoIme, String geslo) throws IncorrectCredentialsException {
 		this.uporabniskoIme = uporabniskoIme;
@@ -54,6 +59,8 @@ public class JEA {
 	 * Metoda vam vrne seznam prihodnjih ocenjevanj
 	 *
 	 * @return Seznam ocenjevanj
+	 * @author chocoearly44
+	 * @since 2.0
 	 */
 	public List<Evaluation> getFutureEvaluations() {
 		return RestUtils.getFutureEvaluations(bearerToken, childId);
@@ -63,6 +70,8 @@ public class JEA {
 	 * Metoda vam vrne seznam preteklih ocenjevanj
 	 *
 	 * @return Seznam ocenjevanj
+	 * @author chocoearly44
+	 * @since 2.0
 	 */
 	public List<Evaluation> getPastEvaluations() {
 		return RestUtils.getPastEvaluations(bearerToken, childId);
@@ -74,6 +83,8 @@ public class JEA {
 	 * @param ponedeljek Datum ponedeljka v tednu
 	 * @param nedelja    Datum nedelje v tednu
 	 * @return OTTF objekt urnika
+	 * @author chocoearly44
+	 * @since 2.0
 	 */
 	public Timetable getTimetable(Date ponedeljek, Date nedelja) {
 		Format formatter = new SimpleDateFormat("yyyy-MM-dd");
