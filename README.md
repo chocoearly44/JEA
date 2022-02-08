@@ -1,10 +1,10 @@
-[![](https://jitpack.io/v/JurijTSL/JEA.svg)](https://jitpack.io/#JurijTSL/JEA)
+[![](https://jitpack.io/v/chocoearly44/JEA.svg)](https://jitpack.io/#chocoearly44/JEA)
 
 # JEA (Java eAsistent API)
 JEA omogoča dostop do podatkov za vaš eAsistent račun.
 
 ## Dokumentacija
-Vse metode so dokumentirane in opisane v odseku [Wiki](https://github.com/JurijTSL/JEA/wiki).
+Vse metode so dokumentirane in opisane v odseku [Wiki](https://github.com/chocoearly44/JEA/wiki).
 
 ## Namestitev
 JEA je trenutno gostovan na strežnikih JitPack. *Za uporabo prosim preberite naslednja navodila:*
@@ -23,9 +23,9 @@ JEA je trenutno gostovan na strežnikih JitPack. *Za uporabo prosim preberite na
 2. Dodajte knjižnjico
 ```xml
 <dependency>
-  <groupId>com.github.JurijTSL</groupId>
+  <groupId>com.github.chocoearly44</groupId>
   <artifactId>JEA</artifactId>
-  <version>TAG</version>
+  <version>Tag</version>
 </dependency>
 ```
 
@@ -43,7 +43,7 @@ allprojects {
 2. Dodajte knjižnjico
 ```gradle
 dependencies {
-  implementation 'com.github.JurijTSL:JEA:TAG'
+  implementation 'com.github.chocoearly44:JEA:Tag'
 }
 ```
 
@@ -53,4 +53,4 @@ Knjižnjica bazira na projektu eAsistent wrapper za Python, ki ga je naredil [@L
 ## Podpora
 Pošljite vprašanja, ideje ali napake v uradnem Discord Serverju.
 
-[![Widget for the TSL Support guild](https://discord.com/api/guilds/807666401300316160/widget.png?style=banner1)](https://discord.gg/Wa24skGscR)
+[![Widget for the SuperLab Support guild](https://discord.com/api/guilds/807666401300316160/widget.png?style=banner1)](https://discord.gg/Wa24skGscR)

@@ -5,6 +5,6 @@ package tk.thesuperlab.jea.exceptions;
  */
 public class IncorrectCredentialsException extends Exception {
 	public IncorrectCredentialsException() {
-		super("Napačno uporabniško ime/geslo.");
+		super("Napačno uporabniško ime ali geslo.");
 	}
 }
