@@ -64,7 +64,7 @@ Knjižnjica bazira na projektu eAsistent wrapper za Python, ki ga je naredil [Le
 ## Poročanje o napakah
 Če med uporabo knjižnice naletite na kakršne koli napake, jih prijavite v odseku [Issues][issues-url].
 
-## Support
+## Podpora
 Dodatno podporo lahko prejmete v uradnem Discord strežniku ali v odseku [Discussions][discussions-url] tukaj na GitHubu.
 
 [![Widget for the TSL Support guild](https://discord.com/api/guilds/807666401300316160/widget.png?style=banner1)](https://discord.gg/Wa24skGscR)
