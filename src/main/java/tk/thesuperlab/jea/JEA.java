@@ -8,12 +8,18 @@ import org.jsoup.nodes.Document;
 import org.jsoup.select.Elements;
 import org.opentimetable.javaottf.entities.Timetable;
 import tk.thesuperlab.jea.entities.Evaluation;
+import tk.thesuperlab.jea.entities.Subject;
+import tk.thesuperlab.jea.entities.filters.WeekFilter;
 import tk.thesuperlab.jea.exceptions.IncorrectCredentialsException;
 import tk.thesuperlab.jea.parseentities.AjaxPrijava;
 import tk.thesuperlab.jea.utils.RestUtils;
 
 import java.text.Format;
 import java.text.SimpleDateFormat;
+import java.time.DayOfWeek;
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -24,13 +30,14 @@ import java.util.List;
  * @since 2.0
  */
 public class JEA {
-	private String uporabniskoIme;
-	private String geslo;
+	private final String uporabniskoIme;
+	private final String geslo;
 
 	private String bearerToken;
 	private String childId;
 
 	private static final ObjectMapper om;
+	private static final Format formatter = new SimpleDateFormat("yyyy-MM-dd");
 
 	static {
 		om = new ObjectMapper();
@@ -78,7 +85,7 @@ public class JEA {
 	}
 
 	/**
-	 * Metoda vam vrne OTTF objekt urnika za teden
+	 * Metoda vam vrne OTTF objekt tedenskega urnika
 	 *
 	 * @param ponedeljek Datum ponedeljka v tednu
 	 * @param nedelja    Datum nedelje v tednu
@@ -87,8 +94,71 @@ public class JEA {
 	 * @since 2.0
 	 */
 	public Timetable getTimetable(Date ponedeljek, Date nedelja) {
-		Format formatter = new SimpleDateFormat("yyyy-MM-dd");
 		return RestUtils.getTimetable(bearerToken, childId, formatter.format(ponedeljek), formatter.format(nedelja));
+	}
+
+	/**
+	 * Metoda vam vrne OTTF objekt tedenskega urnika glede na tedenski filter
+	 *
+	 * @param tedenskiFilter Tedenski filter
+	 * @return OTTF objekt urnika
+	 * @author chocoearly44
+	 * @since 2.1
+	 */
+	public Timetable getTimetable(WeekFilter tedenskiFilter) {
+		Date monday;
+		Date sunday;
+
+		LocalDate currentMonday = LocalDate.now().with(DayOfWeek.MONDAY);
+		LocalDate currentSunday = LocalDate.now().with(DayOfWeek.SUNDAY);
+
+		Calendar cal = Calendar.getInstance();
+
+		switch(tedenskiFilter) {
+			case LAST_WEEK:
+				cal.setTime(getDate(currentMonday));
+				cal.add(Calendar.DATE, -7);
+				monday = cal.getTime();
+
+				cal.setTime(getDate(currentSunday));
+				cal.add(Calendar.DATE, -7);
+				sunday = cal.getTime();
+				break;
+
+			case NEXT_WEEK:
+				cal.setTime(getDate(currentMonday));
+				cal.add(Calendar.DATE, 7);
+				monday = cal.getTime();
+
+				cal.setTime(getDate(currentSunday));
+				cal.add(Calendar.DATE, 7);
+				sunday = cal.getTime();
+				break;
+
+			default:
+				monday = getDate(currentMonday);
+				sunday = getDate(currentSunday);
+				break;
+		}
+
+		return RestUtils.getTimetable(bearerToken, childId, formatter.format(monday), formatter.format(sunday));
+	}
+
+	/**
+	 * Metoda vam vrne seznam vseh predmetov
+	 *
+	 * @return seznam vseh predmetov
+	 * @author chocoearly44
+	 * @since 2.1
+	 */
+	public List<Subject> getAllGrades() {
+		return RestUtils.getAllGrades(bearerToken, childId);
+	}
+
+	private Date getDate(LocalDate localDate) {
+		return Date.from(
+				localDate.atStartOfDay(ZoneId.systemDefault()).toInstant()
+		);
 	}
 
 	private void getAccessToken() throws IncorrectCredentialsException {
