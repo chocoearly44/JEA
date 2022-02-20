@@ -8,6 +8,8 @@ import org.jsoup.nodes.Document;
 import org.jsoup.select.Elements;
 import org.opentimetable.javaottf.entities.Timetable;
 import tk.thesuperlab.jea.entities.Evaluation;
+import tk.thesuperlab.jea.entities.Semester;
+import tk.thesuperlab.jea.entities.Subject;
 import tk.thesuperlab.jea.exceptions.IncorrectCredentialsException;
 import tk.thesuperlab.jea.parseentities.AjaxPrijava;
 import tk.thesuperlab.jea.utils.RestUtils;
@@ -89,6 +91,17 @@ public class JEA {
 	public Timetable getTimetable(Date ponedeljek, Date nedelja) {
 		Format formatter = new SimpleDateFormat("yyyy-MM-dd");
 		return RestUtils.getTimetable(bearerToken, childId, formatter.format(ponedeljek), formatter.format(nedelja));
+	}
+
+	/**
+	 * Metoda vam vrne seznam vseh predmetov
+	 *
+	 * @return seznam vseh predmetov
+	 * @author chocoearly44
+	 * @since 2.1
+	 */
+	public List<Subject> getAllGrades() {
+		return RestUtils.getAllGrades(bearerToken, childId);
 	}
 
 	private void getAccessToken() throws IncorrectCredentialsException {
