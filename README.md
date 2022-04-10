@@ -1,5 +1,5 @@
 <p align="center">
-    <img align="center" src="https://github.com/chocoearly44/JEA/blob/master/assets/icon.png?raw=true" height="150px">
+    <img align="center" src="./assets/icon.png" height="150px">
 </p>
 
 <h1 align="center">Java eAsistent API</h1>
@@ -17,7 +17,7 @@
 
 </div>
 
-## Documentation
+## Dokumentacija
 Vse metode so dokumentirane in opisane v odseku [Wiki][wiki-url].
 
 ## Namestitev
@@ -65,9 +65,7 @@ Knjižnjica bazira na projektu eAsistent wrapper za Python, ki ga je naredil [Le
 Če med uporabo knjižnice naletite na kakršne koli napake, jih prijavite v odseku [Issues][issues-url].
 
 ## Podpora
-Dodatno podporo lahko prejmete v uradnem Discord strežniku ali v odseku [Discussions][discussions-url] tukaj na GitHubu.
-
-[![Widget for the TSL Support guild](https://discord.com/api/guilds/807666401300316160/widget.png?style=banner1)](https://discord.gg/Wa24skGscR)
+Dodatno podporo lahko prejmete v odseku [Discussions][discussions-url] tukaj na GitHubu.
 
 [contributors-shield]: https://img.shields.io/github/contributors/chocoearly44/JEA.svg?style=for-the-badge
 [forks-shield]: https://img.shields.io/github/forks/chocoearly44/JEA.svg?style=for-the-badge
