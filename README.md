@@ -21,7 +21,7 @@
 Vse metode so dokumentirane in opisane v odseku [Wiki][wiki-url].
 
 ## Installation
-Zamenjajte VERSION z zadnjo iz [releases][releases-url].
+Zamenjajte VERSION z zadnjo različico iz [releases][releases-url].
 
 ### Maven
 1. [Avtenticiraje se z GitHub Packages](https://docs.github.com/en/packages/working-with-a-github-packages-registry/working-with-the-apache-maven-registry#authenticating-to-github-packages)
