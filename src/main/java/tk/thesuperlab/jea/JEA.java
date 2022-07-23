@@ -3,22 +3,22 @@ package tk.thesuperlab.jea;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import okhttp3.*;
-import org.jsoup.Jsoup;
-import org.jsoup.nodes.Document;
-import org.jsoup.select.Elements;
 import org.opentimetable.javaottf.entities.Timetable;
 import tk.thesuperlab.jea.entities.Evaluation;
 import tk.thesuperlab.jea.entities.Subject;
 import tk.thesuperlab.jea.entities.filters.WeekFilter;
 import tk.thesuperlab.jea.exceptions.IncorrectCredentialsException;
-import tk.thesuperlab.jea.parseentities.AjaxPrijava;
+import tk.thesuperlab.jea.parseentities.login.Auth;
+import tk.thesuperlab.jea.parseentities.login.Credentials;
 import tk.thesuperlab.jea.utils.RestUtils;
 
+import java.io.IOException;
 import java.text.Format;
 import java.text.SimpleDateFormat;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.ZoneId;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -47,26 +47,21 @@ public class JEA {
 	/**
 	 * @param uporabniskoIme Vaše uporabniško ime za prijavo v eAsistent
 	 * @param geslo          Vaše geslo za prijavo v eAsistent.
-	 * @throws IncorrectCredentialsException
-	 * @author chocoearly44
+	 * @throws IncorrectCredentialsException Podatki za prijavo so napačni
+	 * @throws IOException                   Napaka pri povezavi
 	 * @since 2.0
 	 */
-	public JEA(String uporabniskoIme, String geslo) throws IncorrectCredentialsException {
+	public JEA(String uporabniskoIme, String geslo) throws IncorrectCredentialsException, IOException {
 		this.uporabniskoIme = uporabniskoIme;
 		this.geslo = geslo;
 
-		try {
-			getAccessToken();
-		} catch(IncorrectCredentialsException e) {
-			throw new IncorrectCredentialsException();
-		}
+		getAccessToken();
 	}
 
 	/**
 	 * Metoda vam vrne seznam prihodnjih ocenjevanj
 	 *
 	 * @return Seznam ocenjevanj
-	 * @author chocoearly44
 	 * @since 2.0
 	 */
 	public List<Evaluation> getFutureEvaluations() {
@@ -77,7 +72,6 @@ public class JEA {
 	 * Metoda vam vrne seznam preteklih ocenjevanj
 	 *
 	 * @return Seznam ocenjevanj
-	 * @author chocoearly44
 	 * @since 2.0
 	 */
 	public List<Evaluation> getPastEvaluations() {
@@ -90,7 +84,6 @@ public class JEA {
 	 * @param ponedeljek Datum ponedeljka v tednu
 	 * @param nedelja    Datum nedelje v tednu
 	 * @return OTTF objekt urnika
-	 * @author chocoearly44
 	 * @since 2.0
 	 */
 	public Timetable getTimetable(Date ponedeljek, Date nedelja) {
@@ -102,7 +95,6 @@ public class JEA {
 	 *
 	 * @param tedenskiFilter Tedenski filter
 	 * @return OTTF objekt urnika
-	 * @author chocoearly44
 	 * @since 2.1
 	 */
 	public Timetable getTimetable(WeekFilter tedenskiFilter) {
@@ -148,7 +140,6 @@ public class JEA {
 	 * Metoda vam vrne seznam vseh predmetov
 	 *
 	 * @return seznam vseh predmetov
-	 * @author chocoearly44
 	 * @since 2.1
 	 */
 	public List<Subject> getAllGrades() {
@@ -161,43 +152,33 @@ public class JEA {
 		);
 	}
 
-	private void getAccessToken() throws IncorrectCredentialsException {
+	private void getAccessToken() throws IncorrectCredentialsException, IOException {
 		OkHttpClient client = new OkHttpClient();
 
-		RequestBody body = new FormBody.Builder()
-				.add("uporabnik", uporabniskoIme)
-				.add("geslo", geslo)
-				.build();
+		List<String> types = new ArrayList<>();
+		types.add("child");
+
+		RequestBody body = RequestBody.create(
+				om.writeValueAsString(new Credentials(uporabniskoIme, geslo, types)),
+				MediaType.parse("application/json")
+		);
 
 		Request request = new Request.Builder()
-				.url("https://www.easistent.com/p/ajax_prijava")
+				.url("https://www.easistent.com/m/login")
 				.post(body)
+				.addHeader("x-app-name", "family")
+				.addHeader("x-client-version", "13")
+				.addHeader("x-client-platform", "web")
 				.build();
 
-		try(Response response = client.newCall(request).execute()) {
-			AjaxPrijava ajaxPrijava = om.readValue(response.body().string(), AjaxPrijava.class);
+		Response response = client.newCall(request).execute();
 
-			if(ajaxPrijava.getStatus().equals("ok")) {
-				Request getWebsite = new Request.Builder().url("https://www.easistent.com").addHeader("Cookie", response.headers().get("Set-Cookie")).build();
-
-				try(Response easistentWebsite = client.newCall(getWebsite).execute()) {
-					String eaWebsite = easistentWebsite.body().string();
-					Document website = Jsoup.parse(eaWebsite, "utf-8");
-
-					Elements metaElements = website.select("meta");
-					for(int i = 0; i < metaElements.size(); i++) {
-						if(metaElements.get(i).attr("name").equals("access-token")) {
-							bearerToken = metaElements.get(i).attr("content");
-						} else if(metaElements.get(i).attr("name").equals("x-child-id")) {
-							childId = metaElements.get(i).attr("content");
-						}
-					}
-				}
-			} else {
-				throw new IncorrectCredentialsException();
-			}
-		} catch(Exception e) {
-			e.printStackTrace();
+		if(response.code() == 401) {
+			throw new IncorrectCredentialsException();
 		}
+
+		Auth auth = om.readValue(response.body().string(), Auth.class);
+		bearerToken = auth.getAccessToken().getBearerToken();
+		childId = String.valueOf(auth.getUser().getId());
 	}
 }
