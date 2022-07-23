@@ -18,15 +18,15 @@
 </div>
 
 ## Documentation
-Please refer to the [Wiki section][wiki-url].
+Vse metode so dokumentirane in opisane v odseku [Wiki][wiki-url].
 
 ## Installation
-Replace VERSION with the latest version from [releases][releases-url].
+Zamenjajte VERSION z zadnjo iz [releases][releases-url].
 
 ### Maven
-1. [Authenticate with GitHub Packages](https://docs.github.com/en/packages/working-with-a-github-packages-registry/working-with-the-apache-maven-registry#authenticating-to-github-packages)
+1. [Avtenticiraje se z GitHub Packages](https://docs.github.com/en/packages/working-with-a-github-packages-registry/working-with-the-apache-maven-registry#authenticating-to-github-packages)
 
-2. Add repository
+2. Dodajte repozitorij
 ```xml
 <repository>
   <url>https://maven.pkg.github.com/chocoearly44/jea</url>
@@ -36,7 +36,7 @@ Replace VERSION with the latest version from [releases][releases-url].
 </repository>
 ```
 
-3. Add dependency
+3. Dodajte knjižnjico
 ```xml
 <dependency>
   <groupId>tk.thesuperlab</groupId>
@@ -46,9 +46,9 @@ Replace VERSION with the latest version from [releases][releases-url].
 ```
 
 ### Gradle
-1. [Authenticate with GitHub Packages](https://docs.github.com/en/packages/working-with-a-github-packages-registry/working-with-the-apache-maven-registry#authenticating-to-github-packages)
+1. [Avtenticiraje se z GitHub Packages](https://docs.github.com/en/packages/working-with-a-github-packages-registry/working-with-the-apache-maven-registry#authenticating-to-github-packages)
 
-2. Add repository
+2. Dodajte repozitorij
 ```groovy
 repositories {
   maven {
@@ -61,18 +61,21 @@ repositories {
 }
 ```
 
-3. Add dependency
+3. Dodajte knjižnjico
 ```groovy
 dependencies {
   implementation 'tk.thesuperlab:jea:VERSION'
 }
 ```
 
-## Bug reporting
-If you encounter any bugs while using JEA, please report them in the [Issues Section][issues-url].
+## Zahvale
+Knjižnjica bazira na projektu eAsistent wrapper za Python, ki ga je naredil [LevecGG](https://github.com/LevecGG).
 
-## Support
-You can receive additional support in a [Discussions Section][discussions-url].
+## Poročanje o napakah
+Če med uporabo JEA naletite na kakršne koli napake, jih prijavite v odseku [Issues][issues-url].
+
+## Podpora
+Dodatno podporo lahko prejmete v odseku [Discussions][discussions-url].
 
 [ottf-shield]: https://img.shields.io/badge/OTTF-v1.0-blueviolet?style=for-the-badge
 [contributors-shield]: https://img.shields.io/github/contributors/chocoearly44/JEA.svg?style=for-the-badge
