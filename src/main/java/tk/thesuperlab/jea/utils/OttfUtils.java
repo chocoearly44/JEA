@@ -3,14 +3,17 @@ package tk.thesuperlab.jea.utils;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.opentimetable.javaottf.entities.*;
-import org.opentimetable.javaottf.enums.WeekDay;
-import tk.thesuperlab.jea.parseentities.timetable.*;
+import org.opentimetable.ottf4j.OpenTimetable;
+import org.opentimetable.ottf4j.entities.*;
+import org.opentimetable.ottf4j.exceptions.TimetableComposeException;
+import tk.thesuperlab.jea.parseentities.timetable.EaTeacher;
+import tk.thesuperlab.jea.parseentities.timetable.EaTimetable;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.TreeMap;
+import java.util.stream.Collectors;
 
 public class OttfUtils {
 	private static final ObjectMapper om;
@@ -26,154 +29,89 @@ public class OttfUtils {
 
 		// Set cues
 		Cues cues = new Cues();
-		TreeMap<String, Span> periods = new TreeMap<String, Span>();
-		HashMap<Integer, Span> periodIds = new HashMap<Integer, Span>();
-		ArrayList<Span> recesses = new ArrayList<Span>();
 
-		for(EaPeriod eaPeriod : eaTimetable.getPeriods()) {
-			Span span = new Span();
-			span.setFrom(eaPeriod.getTime().getFrom());
-			span.setTo(eaPeriod.getTime().getTo());
-
-			if(eaPeriod.getType().equals("default")) {
-				periods.put(eaPeriod.getName(), span);
-				periodIds.put(eaPeriod.getId(), span);
-			} else if(eaPeriod.getType().equals("break")) {
-				recesses.add(span);
-			}
-		}
-
-		cues.setPeriods(periods);
+		// Set recesses
+		List<Span> recesses = eaTimetable.getPeriods().stream()
+				.filter(eaPeriod -> eaPeriod.getType().equals("break"))
+				.map(eaPeriod -> {
+					Span span = new Span();
+					span.setFrom(eaPeriod.getTime().getFrom());
+					span.setTo(eaPeriod.getTime().getTo());
+					return span;
+				})
+				.collect(Collectors.toList());
 		cues.setRecesses(recesses);
 
-		// Set days
-		HashMap<WeekDay, Day> days = new HashMap<WeekDay, Day>();
+		// Set periods
+		HashMap<Long, Span> eaSpanMap = new HashMap<>();
 
-		for(EaDay eaDay : eaTimetable.getDays()) {
-			Day day = new Day();
-			WeekDay weekDay = null;
+		List<Span> periods = eaTimetable.getPeriods().stream()
+				.filter(eaPeriod -> eaPeriod.getType().equals("default"))
+				.map(eaPeriod -> {
+					Span span = new Span();
+					span.setFrom(eaPeriod.getTime().getFrom());
+					span.setTo(eaPeriod.getTime().getTo());
 
-			day.setDate(eaDay.getDate());
-			day.setPreclasses(new TreeMap<String, List<ClassEvent>>());
-			day.setClasses(new TreeMap<String, List<ClassEvent>>());
-			day.setEvents(new ArrayList<Event>());
-			day.setDayevents(new ArrayList<DayEvent>());
+					eaSpanMap.put(eaPeriod.getId(), span);
+					return span;
+				})
+				.collect(Collectors.toList());
 
-			switch(eaDay.getName()) {
-				case "Ponedeljek":
-					weekDay = WeekDay.MON;
-					break;
-				case "Torek":
-					weekDay = WeekDay.TUE;
-					break;
-				case "Sreda":
-					weekDay = WeekDay.WED;
-					break;
-				case "Četrtek":
-					weekDay = WeekDay.THU;
-					break;
-				case "Petek":
-					weekDay = WeekDay.FRI;
-					break;
-			}
-
-			days.put(weekDay, day);
+		TreeMap<String, Span> orderedPeriods = new TreeMap<>();
+		for(int i = 1; i <= periods.size(); i++) {
+			orderedPeriods.put(String.valueOf(i), periods.get(i - 1));
 		}
-
-		// Set Classes
-		HashMap<String, Day> tempDays = new HashMap<String, Day>();
-
-		for(Day dayScan : days.values()) {
-			tempDays.put(dayScan.getDate(), dayScan);
-		}
-
-		for(EaSchoolEvent periodEvent : eaTimetable.getSchoolEvents()) {
-			Day dayToModify = tempDays.get(periodEvent.getTime().getDate());
-
-			ClassEvent classToAdd = new ClassEvent();
-
-			if(periodEvent.getSpecialType() != null && !periodEvent.getSpecialType().isEmpty()) {
-				classToAdd.setSubstitution(periodEvent.getSpecialType().equals("substitution"));
-				classToAdd.setExamination(periodEvent.getSpecialType().equals("exam"));
-				classToAdd.setCanceled(periodEvent.getSpecialType().equals("cancelled"));
-			}
-
-			classToAdd.setName(periodEvent.getSubject().getName());
-			classToAdd.setAbbreviation(periodEvent.getSubject().getName());
-			classToAdd.setLocation(periodEvent.getClassroom().getName());
-			classToAdd.setHosts(new ArrayList<String>());
-
-			for(EaTeacher eaTeacher : periodEvent.getTeachers()) {
-				classToAdd.getHosts().add(eaTeacher.getName());
-			}
-
-			Span classSpan = periodIds.get(periodEvent.getTime().getPeriodId());
-			String spanName = "";
-
-			for(String name : periods.keySet()) {
-				if(periods.get(name) == classSpan) {
-					spanName = name;
-					break;
-				}
-			}
-
-			dayToModify.getClasses().computeIfAbsent(spanName, k -> new ArrayList<ClassEvent>());
-
-			ArrayList<ClassEvent> classesToModify = (ArrayList<ClassEvent>) dayToModify.getClasses().get(spanName);
-			classesToModify.add(classToAdd);
-
-			dayToModify.getClasses().put(spanName, classesToModify);
-		}
+		cues.setPeriods(orderedPeriods);
+		toReturn.setCues(cues);
 
 		// Set events
-		ArrayList<Event> events = new ArrayList<Event>();
-
-		for(EaEvent eaEvent : eaTimetable.getEvents()) {
-			Event eventToAdd = new Event();
-			eventToAdd.setFrom(eaEvent.getTime().getFrom());
-			eventToAdd.setTo(eaEvent.getTime().getTo());
-			eventToAdd.setTitle(eaEvent.getName());
-
-			ArrayList<String> eventTeachers = new ArrayList<String>();
-			for(EaTeacher teacher : eaEvent.getTeachers()) {
-				eventTeachers.add(teacher.getName());
-			}
-
-			eventToAdd.setHosts(eventTeachers);
-
-			Day dayToModify = tempDays.get(eaEvent.getDate());
-			if(dayToModify.getEvents() != null) {
-				dayToModify.setEvents(new ArrayList<Event>());
-			}
-
-			dayToModify.getEvents().add(eventToAdd);
+		// Map periods
+		HashMap<Span, String> periodMap = new HashMap<>();
+		int j = 1;
+		for(Span span : orderedPeriods.values()) {
+			periodMap.put(span, String.valueOf(j));
+			j++;
 		}
 
-		// Set day events
-		ArrayList<DayEvent> dayEvents = new ArrayList<DayEvent>();
+		// Parse school events
+		TreeMap<String, Day> days = new TreeMap<>();
+		eaTimetable.getSchoolEvents().stream()
+				.forEach(eaSchoolEvent -> {
+					Long eaPeriodId = eaSchoolEvent.getTime().getPeriodId();
+					String periodSequence = periodMap.get(eaSpanMap.get(eaPeriodId));
 
-		for(EaDayEvent eaDayEvent : eaTimetable.getDayEvents()) {
-			DayEvent dayEventToAdd = new DayEvent();
-			dayEventToAdd.setTitle(eaDayEvent.getName());
+					String date = eaSchoolEvent.getTime().getDate();
+					String specialType = eaSchoolEvent.getSpecialType();
 
-			ArrayList<String> eventTeachers = new ArrayList<String>();
-			for(EaTeacher teacher : eaDayEvent.getTeachers()) {
-				eventTeachers.add(teacher.getName());
-			}
+					// Days
+					Day day = days.getOrDefault(date, new Day(new TreeMap<>(), new ArrayList<>(), new ArrayList<>()));
 
-			dayEventToAdd.setHosts(eventTeachers);
+					// Classes
+					List<ClassEvent> currentPeriod = day.getClasses().getOrDefault(periodSequence, new ArrayList<>());
 
-			Day dayToModify = tempDays.get(eaDayEvent.getDate());
-			if(dayToModify.getDayevents() != null) {
-				dayToModify.setDayevents(new ArrayList<DayEvent>());
-			}
-
-			dayToModify.getDayevents().add(dayEventToAdd);
-		}
-
-		toReturn.setVersion("1.0");
-		toReturn.setCues(cues);
+					currentPeriod.add(
+							new ClassEvent(
+									specialType != null && specialType.equals("substitution"),
+									specialType != null && specialType.equals("exam"),
+									specialType != null && specialType.equals("cancelled"),
+									eaSchoolEvent.getSubject().getName(),
+									eaSchoolEvent.getSubject().getName(),
+									eaSchoolEvent.getClassroom().getName(),
+									eaSchoolEvent.getTeachers().stream()
+											.map(EaTeacher::getName)
+											.collect(Collectors.toList())
+							)
+					);
+					day.getClasses().put(periodSequence, currentPeriod);
+					days.put(date, day);
+				});
 		toReturn.setDays(days);
+
+		try {
+			System.out.println(OpenTimetable.composeTimetable(toReturn));
+		} catch(TimetableComposeException e) {
+			throw new RuntimeException(e);
+		}
 
 		return toReturn;
 	}

@@ -1,7 +1,11 @@
 package tk.thesuperlab.jea.parseentities.timetable;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import lombok.Getter;
+import lombok.Setter;
 
+@Getter
+@Setter
 public class EaTime {
 	@JsonProperty("from")
 	private String from;
@@ -9,21 +13,5 @@ public class EaTime {
 	private String to;
 
 	public EaTime() {
-	}
-
-	public String getFrom() {
-		return from;
-	}
-
-	public void setFrom(String from) {
-		this.from = from;
-	}
-
-	public String getTo() {
-		return to;
-	}
-
-	public void setTo(String to) {
-		this.to = to;
 	}
 }

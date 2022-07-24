@@ -1,9 +1,13 @@
 package tk.thesuperlab.jea.parseentities.timetable;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.util.List;
 
+@Getter
+@Setter
 public class EaSchoolEvent {
 	@JsonProperty("time")
 	private EaSchoolEventTime time;
@@ -17,45 +21,5 @@ public class EaSchoolEvent {
 	private List<EaTeacher> teachers;
 
 	public EaSchoolEvent() {
-	}
-
-	public EaSchoolEventTime getTime() {
-		return time;
-	}
-
-	public void setTime(EaSchoolEventTime time) {
-		this.time = time;
-	}
-
-	public EaSchoolEventSubject getSubject() {
-		return subject;
-	}
-
-	public void setSubject(EaSchoolEventSubject subject) {
-		this.subject = subject;
-	}
-
-	public String getSpecialType() {
-		return specialType;
-	}
-
-	public void setSpecialType(String specialType) {
-		this.specialType = specialType;
-	}
-
-	public EaSchoolEventClassroom getClassroom() {
-		return classroom;
-	}
-
-	public void setClassroom(EaSchoolEventClassroom classroom) {
-		this.classroom = classroom;
-	}
-
-	public List<EaTeacher> getTeachers() {
-		return teachers;
-	}
-
-	public void setTeachers(List<EaTeacher> teachers) {
-		this.teachers = teachers;
 	}
 }

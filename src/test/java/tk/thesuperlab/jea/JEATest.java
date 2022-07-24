@@ -5,6 +5,10 @@ import org.junit.jupiter.api.Test;
 import tk.thesuperlab.jea.exceptions.IncorrectCredentialsException;
 
 import java.io.IOException;
+import java.util.Date;
+import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
@@ -28,6 +32,7 @@ class JEATest {
 
 	@Test
 	void getTimetable() {
+		jea.getTimetable(new Date(122, 0, 31), new Date(122, 1, 6));
 	}
 
 	@Test
