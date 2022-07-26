@@ -22,6 +22,16 @@
 		</repository>
 	</distributionManagement>
 
+	<repositories>
+		<repository>
+			<id>github</id>
+			<url>https://maven.pkg.github.com/opentimetable/ottf4j</url>
+			<snapshots>
+				<enabled>true</enabled>
+			</snapshots>
+		</repository>
+	</repositories>
+
 	<dependencies>
 		<!-- Custom -->
 		<dependency>

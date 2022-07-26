@@ -15,8 +15,10 @@ public class EaEvent {
 	private String name;
 	@JsonProperty("time")
 	private EaTime time;
+	@JsonProperty("location")
+	private EaNameElement location;
 	@JsonProperty("teachers")
-	private List<EaTeacher> teachers;
+	private List<EaNameElement> teachers;
 
 	public EaEvent() {
 	}

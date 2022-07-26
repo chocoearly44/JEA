@@ -6,16 +6,10 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class Grade {
-	@JsonProperty("id")
-	private Long id;
-	@JsonProperty("type_name")
-	private String typeName;
-	@JsonProperty("comment")
-	private String comment;
+public class FinalGrade {
 	@JsonProperty("value")
 	private String value;
 
-	public Grade() {
+	public FinalGrade() {
 	}
 }

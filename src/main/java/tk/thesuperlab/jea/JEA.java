@@ -6,7 +6,7 @@ import okhttp3.*;
 import org.opentimetable.ottf4j.entities.Timetable;
 import tk.thesuperlab.jea.entities.Evaluation;
 import tk.thesuperlab.jea.entities.Subject;
-import tk.thesuperlab.jea.entities.filters.WeekFilter;
+import tk.thesuperlab.jea.filters.WeekFilter;
 import tk.thesuperlab.jea.exceptions.IncorrectCredentialsException;
 import tk.thesuperlab.jea.parseentities.login.Auth;
 import tk.thesuperlab.jea.parseentities.login.Credentials;
@@ -30,12 +30,6 @@ import java.util.List;
  * @since 2.0
  */
 public class JEA {
-	private final String uporabniskoIme;
-	private final String geslo;
-
-	private String bearerToken;
-	private String childId;
-
 	private static final ObjectMapper om;
 	private static final Format formatter = new SimpleDateFormat("yyyy-MM-dd");
 
@@ -43,6 +37,11 @@ public class JEA {
 		om = new ObjectMapper();
 		om.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
 	}
+
+	private final String uporabniskoIme;
+	private final String geslo;
+	private String bearerToken;
+	private String childId;
 
 	/**
 	 * @param uporabniskoIme Vaše uporabniško ime za prijavo v eAsistent
@@ -88,6 +87,18 @@ public class JEA {
 	 */
 	public Timetable getTimetable(Date ponedeljek, Date nedelja) {
 		return RestUtils.getTimetable(bearerToken, childId, formatter.format(ponedeljek), formatter.format(nedelja));
+	}
+
+	/**
+	 * Metoda vam vrne OTTF objekt tedenskega urnika
+	 *
+	 * @param ponedeljek Niz ponedeljka v tednu (yyyy-MM-dd)
+	 * @param nedelja    Niz nedelje v tednu (yyyy-MM-dd)
+	 * @return OTTF objekt urnika
+	 * @since 2.0
+	 */
+	public Timetable getTimetable(String ponedeljek, String nedelja) {
+		return RestUtils.getTimetable(bearerToken, childId, ponedeljek, nedelja);
 	}
 
 	/**

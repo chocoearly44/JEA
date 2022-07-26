@@ -12,13 +12,13 @@ public class EaSchoolEvent {
 	@JsonProperty("time")
 	private EaSchoolEventTime time;
 	@JsonProperty("subject")
-	private EaSchoolEventSubject subject;
+	private EaNameElement subject;
 	@JsonProperty("hour_special_type")
 	private String specialType;
 	@JsonProperty("classroom")
-	private EaSchoolEventClassroom classroom;
+	private EaNameElement classroom;
 	@JsonProperty("teachers")
-	private List<EaTeacher> teachers;
+	private List<EaNameElement> teachers;
 
 	public EaSchoolEvent() {
 	}

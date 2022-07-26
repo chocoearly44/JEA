@@ -14,7 +14,7 @@ public class EaDayEvent {
 	@JsonProperty("name")
 	private String name;
 	@JsonProperty("teachers")
-	private List<EaTeacher> teachers;
+	private List<EaNameElement> teachers;
 
 	public EaDayEvent() {
 	}

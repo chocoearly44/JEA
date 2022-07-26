@@ -6,10 +6,10 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class EaTeacher {
+public class EaNameElement {
 	@JsonProperty("name")
 	private String name;
 
-	public EaTeacher() {
+	public EaNameElement() {
 	}
 }
