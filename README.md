@@ -29,6 +29,7 @@ Zamenjajte VERSION z zadnjo različico iz [releases][releases-url].
 2. Dodajte repozitorij
 ```xml
 <repository>
+  <id>github</id>
   <url>https://maven.pkg.github.com/chocoearly44/jea</url>
   <snapshots>
     <enabled>true</enabled>

@@ -2,8 +2,8 @@ package tk.thesuperlab.jea;
 
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
-import tk.thesuperlab.jea.filters.WeekFilter;
 import tk.thesuperlab.jea.exceptions.IncorrectCredentialsException;
+import tk.thesuperlab.jea.filters.WeekFilter;
 
 import java.io.IOException;
 

@@ -8,5 +8,5 @@ public enum GradeRank {
 	@JsonProperty("average")
 	AVERAGE,
 	@JsonProperty("good")
-	GOOD;
+	GOOD
 }
