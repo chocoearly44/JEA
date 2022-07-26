@@ -5,7 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
-import org.opentimetable.javaottf.entities.Timetable;
+import org.opentimetable.ottf4j.entities.Timetable;
 import tk.thesuperlab.jea.entities.Evaluation;
 import tk.thesuperlab.jea.entities.Subject;
 import tk.thesuperlab.jea.parseentities.EvaluationList;

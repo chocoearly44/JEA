@@ -1,4 +1,4 @@
-package tk.thesuperlab.jea.entities.filters;
+package tk.thesuperlab.jea.filters;
 
 /**
  * Tedenski filter za urnik
@@ -13,7 +13,7 @@ public enum WeekFilter {
 	LAST_WEEK,
 
 	/**
-	 * Pridobi urnik za trenutni (tekoči) teden
+	 * Pridobi urnik za tekoči teden
 	 */
 	CURRENT_WEEK,
 

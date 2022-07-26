@@ -1,10 +1,14 @@
 package tk.thesuperlab.jea.entities;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import lombok.Getter;
+import lombok.Setter;
 
+@Getter
+@Setter
 public class Evaluation {
 	@JsonProperty("id")
-	private int id;
+	private Long id;
 	@JsonProperty("course")
 	private String course;
 	@JsonProperty("subject")
@@ -19,61 +23,5 @@ public class Evaluation {
 	private String grade;
 
 	public Evaluation() {
-	}
-
-	public int getId() {
-		return id;
-	}
-
-	public void setId(int id) {
-		this.id = id;
-	}
-
-	public String getCourse() {
-		return course;
-	}
-
-	public void setCourse(String course) {
-		this.course = course;
-	}
-
-	public String getSubject() {
-		return subject;
-	}
-
-	public void setSubject(String subject) {
-		this.subject = subject;
-	}
-
-	public String getType() {
-		return type;
-	}
-
-	public void setType(String type) {
-		this.type = type;
-	}
-
-	public String getDate() {
-		return date;
-	}
-
-	public void setDate(String date) {
-		this.date = date;
-	}
-
-	public String getPeriod() {
-		return period;
-	}
-
-	public void setPeriod(String period) {
-		this.period = period;
-	}
-
-	public String getGrade() {
-		return grade;
-	}
-
-	public void setGrade(String grade) {
-		this.grade = grade;
 	}
 }
