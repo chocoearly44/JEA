@@ -17,27 +17,22 @@
 
 </div>
 
-## Documentation
+## Dokumentacija
 Vse metode so dokumentirane in opisane v odseku [Wiki][wiki-url].
 
-## Installation
+## Namestitev
 Zamenjajte VERSION z zadnjo različico iz [releases][releases-url].
 
 ### Maven
-1. [Avtenticiraje se z GitHub Packages](https://docs.github.com/en/packages/working-with-a-github-packages-registry/working-with-the-apache-maven-registry#authenticating-to-github-packages)
-
-2. Dodajte repozitorij
+1. Dodajte repozitorij
 ```xml
 <repository>
-  <id>github</id>
-  <url>https://maven.pkg.github.com/chocoearly44/jea</url>
-  <snapshots>
-    <enabled>true</enabled>
-  </snapshots>
+  <id>repsy</id>
+  <url>https://repo.repsy.io/mvn/chocoearly44/maven</url>
 </repository>
 ```
 
-3. Dodajte knjižnjico
+2. Dodajte knjižnjico
 ```xml
 <dependency>
   <groupId>tk.thesuperlab</groupId>
@@ -47,22 +42,16 @@ Zamenjajte VERSION z zadnjo različico iz [releases][releases-url].
 ```
 
 ### Gradle
-1. [Avtenticiraje se z GitHub Packages](https://docs.github.com/en/packages/working-with-a-github-packages-registry/working-with-the-apache-maven-registry#authenticating-to-github-packages)
-
-2. Dodajte repozitorij
+1. Dodajte repozitorij
 ```groovy
 repositories {
   maven {
-    url = uri("https://maven.pkg.github.com/chocoearly44/jea")
-    credentials {
-      username = System.getenv("USERNAME")
-      password = System.getenv("TOKEN")
-    }
+    url "https://repo.repsy.io/mvn/chocoearly44/maven"
   }
 }
 ```
 
-3. Dodajte knjižnjico
+2. Dodajte knjižnjico
 ```groovy
 dependencies {
   implementation 'tk.thesuperlab:jea:VERSION'
